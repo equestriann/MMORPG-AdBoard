@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -20,34 +20,24 @@
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-<!--            <div class="border-end bg-white" id="sidebar-wrapper">-->
-<!--&lt;!&ndash;                <div class="sidebar-heading border-bottom bg-light"><b>MMORPG</b></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="sidebar-heading border-bottom bg-light"><i>MMORPG</i></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="sidebar-heading border-bottom bg-light">MMORPG</div>&ndash;&gt;-->
-<!--                <div class="list-group list-group-flush">-->
-<!--                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Главная</a>-->
-<!--                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Поиск</a>-->
-<!--                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Войти</a>-->
-<!--                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Создать объявление</a>-->
-<!--&lt;!&ndash;                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Создать объявление</a>&ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-            <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     <div class="container-fluid">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{% url 'ads_list' %}">Главная</a>
+                                </li>
                                 <li class="nav-item active"><a class="nav-link" href="#!">Войти</a></li>
                                 <li class="nav-item active"><a class="nav-link" href="#!">Мой профиль</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="#!">Создать объявление</a></li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{% url 'ads_create' %}">Создать объявление</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
-                <!-- Page content-->
                 {% block content %}
                 {% endblock content %}
             </div>

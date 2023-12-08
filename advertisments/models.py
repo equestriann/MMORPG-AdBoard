@@ -39,6 +39,9 @@ class Ad(models.Model):
     def preview(self):
         return f'{self.content[:124]}...'
 
+    def get_absolute_url(self):
+        return f'/{self.id}'
+
 class Reply(models.Model):
     author = models.ForeignKey(
         to=User,
