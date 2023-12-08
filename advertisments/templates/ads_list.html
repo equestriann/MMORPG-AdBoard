@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--<body>-->
+<div class="container-fluid" id="centerLayer">
+    <h2 class="mt-4" align="center">Объявления</h2>
+    {% for ad in ads_list %}
+        <p style="color:rgb(120, 120, 120)">
+            Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b>
+        </p>
+        <p>
+            <a href="{% url 'ads_detail' ad.id %}"><b>{{ ad.title }}</b></a>
+            <br />
+            {{ ad.content|striptags|truncatechars:150 }}
+        </p>
+        <hr>
+    {% endfor %}
+</div>
+<!--</body>-->
+{% endblock content %}

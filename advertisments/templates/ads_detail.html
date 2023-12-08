@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" id="centerLayer">
+    <h3 class="mt-4" align="center">{{ ad.title }}</h3>
+    <p style="color:rgb(120, 120, 120)">
+        <b>{{ ad.pub_date|date:'d M Y' }}</b> Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b>
+    </p>
+    <p>
+        {{ ad.content|striptags }}
+    </p>
+</div>
+{% endblock content %}

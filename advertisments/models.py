@@ -36,6 +36,9 @@ class Ad(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    def preview(self):
+        return f'{self.content[:124]}...'
+
 class Reply(models.Model):
     author = models.ForeignKey(
         to=User,
@@ -67,7 +70,6 @@ class Reply(models.Model):
     def __str__(self):
         return f'{self.text[:50]}...'
 
-# TODO добавить возможность принимать и отменять отклик
     def accept(self):
         self.is_accepted = True
         self.save()
