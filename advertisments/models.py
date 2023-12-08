@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .extensions import CATEGORIES
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Ad(models.Model):
     pub_date = models.DateTimeField(
@@ -24,7 +24,7 @@ class Ad(models.Model):
         default=None,
     )
 
-    content = RichTextField(
+    content = RichTextUploadingField(
         blank=True
     )
 
