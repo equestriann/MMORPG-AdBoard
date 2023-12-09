@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # other
     'django.contrib.sites',
+    'django_filters',
 
     # my apps
     'advertisments',

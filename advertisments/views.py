@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 
 from .models import Ad
 from .forms import AdsCreateForm
+from .filters import AdsFilter
 
 
 class AdsListView(ListView):
@@ -13,7 +13,6 @@ class AdsListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ads_total'] = Ad.objects.count()
-        # pprint(context)
         return context
 
 class AdsDetailView(DetailView):
@@ -27,3 +26,13 @@ class AdsCreateView(CreateView):
     template_name = 'ads_create.html'
     redirect_field_name = 'redirect_to'
     context_object_name = 'create_form'
+
+class AdsSearchView(ListView):
+    model = Ad
+    template_name = 'ads_search.html'
+    context_object_name = 'ads'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['filter'] = AdsFilter(self.request.GET, queryset=self.get_queryset())
+        return context
