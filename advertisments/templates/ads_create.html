@@ -1,37 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid" xmlns="http://www.w3.org/1999/html" id="centerLayer">
-    <h4 class="mt-4" align="center">Новое объявление</h4>
-        <form action="" method="POST">
-        {% csrf_token %}
-            <div class="fieldWrapper">
-                <label>Категория:</label>
-                {{ form.category }}
-                {{ form.category.help_text }}
-            </div>
-            <div class="fieldWrapper">
-                <label>Заголовок:</label>
-                {{ form.title }}
-                {{ form.title.help_text }}
-                <br />
-            </div>
-            <div class="fieldWrapper">
-                <label >Автор:</label>
-                {{ form.author }}
-            </div>
-            <div class="fieldWrapper">
-                <label>Содержание:</label>
-                {{ form.media }}
-                {{ form.content }}
-                <br />
-            </div>
-        </form>
-        <br>
-        <input type="submit" value="Опубликовать" style="color: #4682B4; border: #4682B4"/>
-        <br>
-        <a href="{% url 'ads_list' %}" style="color: #4682B4">
-            <b>Назад на главную</b>
-        </a>
-</div>
+<form action="" method="POST">
+    <div class="container-fluid" xmlns="http://www.w3.org/1999/html" id="centerLayer">
+        <h2 class="mt-4" align="center">Новое объявление</h2>
+            {% csrf_token %}
+                <p>
+                    <label>Категория:</label>
+                    {{ form.category }}
+                    <label>Заголовок:</label>
+                    {{ form.title }}
+                    <label >Автор:</label>
+                    {{ form.author }}
+                </p>
+                <p>
+                    {{ form.media }}
+                    {{ form.content }}
+                </p>
+            <input type="submit" value="Опубликовать" style="color: #4682B4; border: #4682B4"/>
+            <br><br>
+            <a href="{% url 'ads_list' %}" style="color: #4682B4">
+                <b>Назад на главную</b>
+            </a>
+    </div>
+</form>
 {% endblock content %}

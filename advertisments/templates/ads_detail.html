@@ -8,7 +8,14 @@
             {{ ad.pub_date|date:'d M Y' }}
         </b>
         <br />
-        Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b>
+        Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b> |
+        <a href="#" style="color: #4682B4">
+            Редактировать
+        </a>
+        |
+        <a href="#" style="color: #4682B4">
+            Удалить
+        </a>
     </p>
     <p>
         {{ ad.content|striptags }}

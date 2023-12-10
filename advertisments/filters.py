@@ -1,4 +1,4 @@
-from django_filters import FilterSet, ChoiceFilter, CharFilter, DateFilter, DateFromToRangeFilter
+from django_filters import FilterSet, ChoiceFilter, CharFilter, DateFromToRangeFilter
 from django_filters.widgets import DateRangeWidget
 from django import forms
 
@@ -13,14 +13,14 @@ class AdsFilter(FilterSet):
 
     author = CharFilter(
         label='Автор',
-        lookup_expr=['icontains'],
-        field_name='author',
+        lookup_expr='icontains',
+        field_name='author__username',
         widget = forms.TextInput,
     )
 
     title = CharFilter(
         label='Заголовок',
-        lookup_expr=['icontains'],
+        lookup_expr='icontains',
         field_name='title',
         widget=forms.TextInput,
     )

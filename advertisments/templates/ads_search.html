@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!--<body>-->
 <div class="container-fluid" id="centerLayer">
-<!--    <h6 class="mt-4"><u>Всего: {{ ads_total }}</u></h6>-->
+    <br />
     <form method="GET">
-        {{ filter.form }}
-        <br />
-        <input type="submit" value="Найти">
-        <br />
-        <hr />
+        <p>
+            Категория: {{ filter.form.category }} |
+            Заголовок: {{ filter.form.title }} |
+            Автор: {{ filter.form.author }}
+        </p>
+        <p>
+            Период: {{ filter.form.pub_date }}
+        </p>
+        <p>
+            <input type="submit" value="Найти" style="color: #4682B4; border: #4682B4">
+        </p>
+        <hr>
     </form>
     {% if ads %}
         {% for ad in filter.qs %}
@@ -23,7 +29,8 @@
             </p>
             <hr>
         {% endfor %}
+    {% else %}
+        <h3>К сожалению, объявлений, подходящих по данным параметрам нет.</h3>
     {% endif %}
 </div>
-<!--</body>-->
 {% endblock content %}
