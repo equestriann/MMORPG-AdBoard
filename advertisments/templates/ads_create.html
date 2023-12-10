@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid" id="centerLayer" xmlns="http://www.w3.org/1999/html">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html" id="centerLayer">
     <h4 class="mt-4" align="center">Новое объявление</h4>
+        <form action="" method="POST">
         {% csrf_token %}
-        <div class="fieldWrapper">
-            <label>Категория:</label>
-            {{ form.category }}
-            {{ form.category.help_text }}
-            <br />
-        </div>
-        <div class="fieldWrapper">
-            <label>Заголовок:</label>
-            {{ form.title }}
-            {{ form.title.help_text }}
-            <br />
-        </div>
-        <div class="fieldWrapper">
-            <label>Содержание:</label>
-            {{ form.media }}
-            {{ form.content }}
-            <br />
-        </div>
-        <div class="fieldWrapper">
-            <label>Автор:</label>
-            {{ form.author }}
-            <br />
-        </div>
+            <div class="fieldWrapper">
+                <label>Категория:</label>
+                {{ form.category }}
+                {{ form.category.help_text }}
+            </div>
+            <div class="fieldWrapper">
+                <label>Заголовок:</label>
+                {{ form.title }}
+                {{ form.title.help_text }}
+                <br />
+            </div>
+            <div class="fieldWrapper">
+                <label >Автор:</label>
+                {{ form.author }}
+            </div>
+            <div class="fieldWrapper">
+                <label>Содержание:</label>
+                {{ form.media }}
+                {{ form.content }}
+                <br />
+            </div>
+        </form>
         <br>
         <input type="submit" value="Опубликовать" style="color: #4682B4; border: #4682B4"/>
         <br>
