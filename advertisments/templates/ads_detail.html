@@ -9,7 +9,7 @@
         </b>
         <br />
         Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b> |
-        <a href="#" style="color: #4682B4">
+        <a href="{% url 'ads_update' ad.id %}" style="color: #4682B4">
             Редактировать
         </a>
         |

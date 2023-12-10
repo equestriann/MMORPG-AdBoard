@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
 from .models import Ad
 from .forms import AdsCreateForm
@@ -36,3 +36,11 @@ class AdsSearchView(ListView):
         context = super().get_context_data()
         context['filter'] = AdsFilter(self.request.GET, queryset=self.get_queryset())
         return context
+
+class AdsUpdateView(UpdateView):
+    template_name = 'ads_create.html'
+    form_class = AdsCreateForm
+
+    def get_object(self, **kwargs):
+        id_ = self.kwargs.get('pk')
+        return Ad.objects.get(pk=id_)
