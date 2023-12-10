@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!--<body>-->
 <div class="container-fluid" id="centerLayer">
-<!--    <h2 class="mt-4" align="center">Все объявления</h2>-->
     <h6 class="mt-4"><u>Всего: {{ ads_total }}</u></h6>
     {% for ad in ads_list %}
         <p style="color:rgb(120, 120, 120)">
@@ -17,5 +15,112 @@
         <hr>
     {% endfor %}
 </div>
-<!--</body>-->
+
+<br>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                Previous
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">
+                Previous
+            </a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.paginator.num_pages <= 5 %}
+
+        {% for page_num in page_obj.paginator.page_range %}
+        {% if page_num == page_obj.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_num }}">
+                {{ page_num }}
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_num }}">
+                {{ page_num }}
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% else %}
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                {{ page_obj.previous_page_number }}
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_obj.number }}">
+                {{ page_obj.number }}
+            </a>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                {{ page_obj.next_page_number }}
+            </a>
+        </li>
+        {% endif %}
+        {% endif %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                Next
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">
+                Next
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">
+                First
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">
+                First
+            </a>
+        </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                Last
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">
+                Last
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
 {% endblock content %}

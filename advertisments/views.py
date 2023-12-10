@@ -9,6 +9,7 @@ class AdsListView(ListView):
     model = Ad
     context_object_name = 'ads_list'
     template_name = 'ads_list.html'
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,6 +32,7 @@ class AdsSearchView(ListView):
     model = Ad
     template_name = 'ads_search.html'
     context_object_name = 'ads'
+    paginate_by = 4
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()

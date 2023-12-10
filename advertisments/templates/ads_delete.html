@@ -6,10 +6,10 @@
     <p>
         {{ ad.content|striptags }}
     </p>
-    <div style="text-align:center">
+    <div>
         <form method="Post">
             {% csrf_token %}
-            <input type="submit" value="Да" style="color: #CD5C5C">
+            <input type="submit" value="Удалить" style="color: #CD5C5C; border:none" class="my_button">
         </form>
     </div>
     <br>
