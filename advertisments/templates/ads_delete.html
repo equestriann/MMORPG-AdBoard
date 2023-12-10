@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" id="centerLayer">
+    <h5 class="mt-4" align="center">Вы действительно хотите удалить это объявление?</h5>
+    <p>
+        {{ ad.content|striptags }}
+    </p>
+    <div style="text-align:center">
+        <form method="Post">
+            {% csrf_token %}
+            <input type="submit" value="Да" style="color: #CD5C5C">
+        </form>
+    </div>
+    <br>
+    <a href="{% url 'ads_list' %}" style="color: #4682B4">
+        <b>Назад на главную</b>
+    </a>
+</div>
+{% endblock content %}

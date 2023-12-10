@@ -44,3 +44,8 @@ class AdsUpdateView(UpdateView):
     def get_object(self, **kwargs):
         id_ = self.kwargs.get('pk')
         return Ad.objects.get(pk=id_)
+
+class AdsDeleteView(DeleteView):
+    template_name = 'ads_delete.html'
+    success_url = '/'
+    queryset = Ad.objects.all()
