@@ -4,18 +4,18 @@ from django import forms
 
 from .extensions import CATEGORIES
 
-class AdsFilter(FilterSet):
 
+class AdsFilter(FilterSet):
     category = ChoiceFilter(
-        choices = CATEGORIES,
-        label = 'Категория'
+        choices=CATEGORIES,
+        label='Категория'
     )
 
     author = CharFilter(
         label='Автор',
         lookup_expr='icontains',
         field_name='author__username',
-        widget = forms.TextInput,
+        widget=forms.TextInput,
     )
 
     title = CharFilter(
@@ -30,5 +30,5 @@ class AdsFilter(FilterSet):
             attrs={'type': 'date'}
         ),
         field_name='pub_date',
-        label = 'Дата публикации'
+        label='Дата публикации'
     )

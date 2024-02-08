@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .extensions import CATEGORIES
 from ckeditor_uploader.fields import RichTextUploadingField
 
+
 class Ad(models.Model):
     pub_date = models.DateTimeField(
         auto_now_add=True
@@ -42,6 +43,7 @@ class Ad(models.Model):
     def get_absolute_url(self):
         return f'/{self.id}'
 
+
 class Reply(models.Model):
     author = models.ForeignKey(
         to=User,
@@ -55,6 +57,7 @@ class Reply(models.Model):
     ad = models.ForeignKey(
         to=Ad,
         on_delete=models.CASCADE,
+        related_name='replies_to_ad',
     )
 
     text = models.TextField(

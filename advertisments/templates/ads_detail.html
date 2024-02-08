@@ -16,6 +16,11 @@
         <a href="{% url 'ads_delete' ad.id %}" style="color: #4682B4">
             Удалить
         </a>
+        <br>
+        <b>{{ replies_to_this_ad }}</b> откликов |
+        <a href="{% url 'reply_create' %}" style="color: #4682B4">
+            Оставить отклик
+        </a>
     </p>
     <p>
         {{ ad.content|striptags }}

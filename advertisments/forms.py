@@ -2,17 +2,17 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.db.models import TextField
 from django.forms import ModelForm, ChoiceField, CharField
 
-from .models import Ad
+from .models import Ad, Reply
 from .extensions import CATEGORIES
 
-class AdsCreateForm(ModelForm):
 
+class AdsCreateForm(ModelForm):
     category = ChoiceField(
         choices=CATEGORIES,
         label='Выберите категорию',
         help_text='*Обязательное поле',
         error_messages={
-            'required' : 'Необходимо выбрать категорию!'
+            'required': 'Необходимо выбрать категорию!'
         }
     )
 
@@ -36,4 +36,14 @@ class AdsCreateForm(ModelForm):
         model = Ad
         fields = ['category', 'title', 'content', 'author']
 
+
 # TODO: убрать поле author, когда будет реализована регистрация и авторизация
+
+class ReplyCreateForm(ModelForm):
+    text = TextField()
+
+    class Meta:
+        model = Reply
+        fields = [
+            'text',
+        ]
