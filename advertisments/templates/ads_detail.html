@@ -18,7 +18,7 @@
         </a>
         <br>
         <b>{{ replies_to_this_ad }}</b> откликов |
-        <a href="{% url 'reply_create' %}" style="color: #4682B4">
+        <a href="{% url 'reply_create' ad.id %}" style="color: #4682B4">
             Оставить отклик
         </a>
     </p>

@@ -46,4 +46,5 @@ class ReplyCreateForm(ModelForm):
         model = Reply
         fields = [
             'text',
+            'author',
         ]

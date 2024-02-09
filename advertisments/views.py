@@ -70,9 +70,34 @@ class ReplyCreateView(CreateView):
     model = Reply
     form_class = ReplyCreateForm
     template_name = 'reply_create.html'
-    context_object_name = 'create_form'
+    context_object_name = 'reply'
+    success_url = 'detail'
+
+    def form_valid(self, form):
+        reply = form.save(commit=False)
+        ad = Ad.objects.get(pk=self.kwargs['pk'])
+        reply.ad = ad
+        reply.save()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ad_title'] = 'Тут должен быть заголовок текущего объявления...'
+        context['ad_title'] = Ad.objects.get(pk=self.kwargs['pk']).title
+        return context
+
+
+class ReplyDetailView(DetailView):
+    model = Reply
+    context_object_name = 'reply'
+    template_name = 'reply_user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        is_accepted = Reply.is_accepted
+
+        if is_accepted is True:
+            context['is_accepted'] = 'Отклик принят'
+        else:
+            context['is_accepted'] = 'В ожидании'
+
         return context
