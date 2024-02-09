@@ -9,5 +9,5 @@ urlpatterns = [
     path('update/<int:pk>/', AdsUpdateView.as_view(), name='ads_update'),
     path('delete/<int:pk>/', AdsDeleteView.as_view(), name='ads_delete'),
     path('<int:pk>/reply/', ReplyCreateView.as_view(), name='reply_create'),
-    path('<int:pk>/reply/detail', ReplyDetailView.as_view(), name='reply_detail')
+    path('<int:pk>/reply/detail', ReplyDetailView.as_view(), name='reply_detail'),
 ]

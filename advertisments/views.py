@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.urls import reverse
 
 from .models import Ad, Reply
 from .forms import AdsCreateForm, ReplyCreateForm
@@ -71,7 +72,6 @@ class ReplyCreateView(CreateView):
     form_class = ReplyCreateForm
     template_name = 'reply_create.html'
     context_object_name = 'reply'
-    success_url = 'detail'
 
     def form_valid(self, form):
         reply = form.save(commit=False)
@@ -85,6 +85,9 @@ class ReplyCreateView(CreateView):
         context['ad_title'] = Ad.objects.get(pk=self.kwargs['pk']).title
         return context
 
+    def get_success_url(self):
+        return reverse('reply_detail', kwargs={'pk': self.object.pk})
+
 
 class ReplyDetailView(DetailView):
     model = Reply
@@ -93,7 +96,10 @@ class ReplyDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        is_accepted = Reply.is_accepted
+        current_reply = Reply.objects.get(pk=self.kwargs['pk'])
+        context['reply_date'] = current_reply.date_sent
+        context['reply_text'] = current_reply.text
+        is_accepted = current_reply.is_accepted
 
         if is_accepted is True:
             context['is_accepted'] = 'Отклик принят'

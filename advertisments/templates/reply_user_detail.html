@@ -5,14 +5,14 @@
     <h3 class="mt-4" align="center">Отклик отправлен!</h3>
     <p style="color:rgb(120, 120, 120)">
         <b>
-            {{ reply.date_sent|date:'d M Y' }}
+            {{ reply_date|date:'d M Y' }}
             <br />
             Статус рассмотрения: {{ is_accepted }}
         </b>
         <br />
     </p>
     <p>
-        {{ reply.text|striptags }}
+        {{ reply_text|striptags }}
     </p>
     <a href="{% url 'ads_list' %}" style="color: #4682B4">
         <b>Назад на главную</b>
