@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # my apps
     'advertisments',
+    'accounts',
 
     # side apps
     'ckeditor_uploader',

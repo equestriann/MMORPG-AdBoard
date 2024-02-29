@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+    <div class="container-fluid" xmlns="http://www.w3.org/1999/html" id="centerLayer">
+        <h2 class="mt-4" align="center">Регистрация</h2>
+            {% csrf_token %}
+                <p>
+                    <label>Имя пользователя:</label>
+                    {{ reg_form.username }}
+                </p>
+                <p>
+                    <label>Электронная почта:</label>
+                    {{ reg_form.email }}
+                </p>
+                <p>
+                    <label >Пароль:</label>
+                    {{ reg_form.password1 }}
+                </p>
+                <p>
+                    <label >Повторите пароль:</label>
+                    {{ reg_form.password2 }}
+                </p>
+            <input type="submit" value="Зарегистрироваться" style="color: #4682B4; border: #4682B4"/>
+            <br><br>
+            <a href="{% url 'ads_list' %}" style="color: #4682B4">
+                <b>Назад на главную</b>
+            </a>
+    </div>
+</form>
+{% endblock content %}
