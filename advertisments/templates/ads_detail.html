@@ -22,10 +22,13 @@
         {% endif %}
         {% endif %}
         <br>
-        <b>{{ replies_to_this_ad }}</b> откликов |
+        <b>{{ replies_to_this_ad }}</b> откликов
+        {% if ad.author != request.user %}
+        |
         <a href="{% url 'reply_create' ad.id %}" style="color: #4682B4">
             Оставить отклик
         </a>
+        {% endif %}
     </p>
     <p>
         {{ ad.content|striptags }}
