@@ -21,6 +21,13 @@
                     <label >Повторите пароль:</label>
                     {{ reg_form.password2 }}
                 </p>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
             <input type="submit" value="Зарегистрироваться" style="color: #4682B4; border: #4682B4"/>
             <br><br>
             <a href="{% url 'ads_list' %}" style="color: #4682B4">
