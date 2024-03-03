@@ -39,6 +39,12 @@ class AdsCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     context_object_name = 'create_form'
 
+    def form_valid(self, form):
+        ad = form.save(commit=False)
+        form.instance.author = self.request.user
+        ad.save()
+        return super().form_valid(form)
+
 
 class AdsSearchView(ListView):
     model = Ad
@@ -79,6 +85,7 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
         reply = form.save(commit=False)
         ad = Ad.objects.get(pk=self.kwargs['pk'])
         reply.ad = ad
+        form.instance.author = self.request.user
         reply.save()
         return super().form_valid(form)
 

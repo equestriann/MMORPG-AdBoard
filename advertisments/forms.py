@@ -34,7 +34,9 @@ class AdsCreateForm(ModelForm):
 
     class Meta:
         model = Ad
-        fields = ['category', 'title', 'content', 'author']
+        fields = ['category',
+                  'title',
+                  'content']
 
 
 # TODO: убрать поле author, когда будет реализована регистрация и авторизация
@@ -45,6 +47,5 @@ class ReplyCreateForm(ModelForm):
     class Meta:
         model = Reply
         fields = [
-            'text',
-            'author',
+            'text'
         ]
