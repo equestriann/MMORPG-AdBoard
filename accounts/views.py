@@ -6,28 +6,41 @@ from .forms import AccountCreationForm
 
 
 def user_login(request):
-    pass
-    # username = request.POST("username")
-    # password = request.POST('password')
-    # user = authenticate(
-    #     request,
-    #     username=username,
-    #     password=password
-    # )
-    #
-    # if user is not None:
-    #     login(request, user)
-    #     return redirect('login_success')
-    # else:
-    #     messages.info(request, 'Ошибка при попытке входа')
-    #
-    # context = {}
-    #
-    # return render(
-    #     request,
-    #     'login.html',
-    #     context
-    # )
+
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+
+        if user is not None:
+            login(request, user)
+            return redirect('login_success')
+        else:
+            messages.info(request, 'Login error')
+
+    context = {}
+
+    return render(
+        request,
+        "login.html",
+        context
+    )
+
+
+def login_success(request):
+    context = {
+        "text": "Login success"
+    }
+
+    return render(
+        request,
+        context=context,
+        template_name="login_success.html"
+    )
 
 
 def user_register(request):
