@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" id="centerLayer" xmlns="http://www.w3.org/1999/html">
+    {% csrf_token %}
+    <h6> Мои объявления: {{ ads.count }} </h6>
+    {% for ad in ads %}
+    <p style="color:rgb(120, 120, 120)">
+        <a style="color:#4682B4" href="{% url 'ads_detail' ad.id %}"><b>{{ ad.title }}</b></a> | Категория: <b>{{ ad.category }}</b>
+        <br>
+        {{ ad.content|striptags|truncatechars:150 }}
+    </p>
+    {% endfor %}
+    <hr>
+    <h6> Мои отклики: {{ replies.count }} </h6>
+    {% for reply in replies %}
+        <small style="color:rgb(120, 120, 120)">{{ reply.date_sent|date:'d M Y' }}</small>
+        <br>
+        {{ reply.text|striptags|truncatechars:150 }}
+    <br>
+    {% endfor %}
+</div>
+
+<br>
+{% endblock content %}

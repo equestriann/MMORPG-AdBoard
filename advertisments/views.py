@@ -5,6 +5,8 @@ from .models import Ad, Reply
 from .forms import AdsCreateForm, ReplyCreateForm
 from .filters import AdsFilter
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class AdsListView(ListView):
     model = Ad
@@ -30,7 +32,7 @@ class AdsDetailView(DetailView):
         return context
 
 
-class AdsCreateView(CreateView):
+class AdsCreateView(LoginRequiredMixin, CreateView):
     model = Ad
     form_class = AdsCreateForm
     template_name = 'ads_create.html'
@@ -44,13 +46,13 @@ class AdsSearchView(ListView):
     context_object_name = 'ads'
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['filter'] = AdsFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
-class AdsUpdateView(UpdateView):
+class AdsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'ads_create.html'
     form_class = AdsCreateForm
 
@@ -59,7 +61,7 @@ class AdsUpdateView(UpdateView):
         return Ad.objects.get(pk=id_)
 
 
-class AdsDeleteView(DeleteView):
+class AdsDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'ads_delete.html'
     success_url = '/'
     queryset = Ad.objects.all()
@@ -67,7 +69,7 @@ class AdsDeleteView(DeleteView):
 
 # -----------------------------------
 
-class ReplyCreateView(CreateView):
+class ReplyCreateView(LoginRequiredMixin, CreateView):
     model = Reply
     form_class = ReplyCreateForm
     template_name = 'reply_create.html'
@@ -89,7 +91,7 @@ class ReplyCreateView(CreateView):
         return reverse('reply_detail', kwargs={'pk': self.object.pk})
 
 
-class ReplyDetailView(DetailView):
+class ReplyDetailView(LoginRequiredMixin, DetailView):
     model = Reply
     context_object_name = 'reply'
     template_name = 'reply_user_detail.html'
@@ -106,4 +108,16 @@ class ReplyDetailView(DetailView):
         else:
             context['is_accepted'] = 'В ожидании'
 
+        return context
+
+
+# -----------------------------------
+class UserProfile(ListView):
+    template_name = "user_profile.html"
+    model = Ad
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ads'] = Ad.objects.filter(author=self.request.user).all()
+        context['replies'] = Reply.objects.filter(author=self.request.user).all()
         return context

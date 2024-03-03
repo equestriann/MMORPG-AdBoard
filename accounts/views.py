@@ -18,7 +18,7 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('login_success')
+            return redirect('user_profile')
         else:
             messages.info(request, 'Login error')
 
@@ -33,19 +33,19 @@ def user_login(request):
 
 def login_success(request):
     context = {
-        "text": "Login success"
+        # "text": "Login success"
     }
 
     return render(
         request,
         context=context,
-        template_name="login_success.html"
+        template_name="user_profile.html"
     )
 
 
 def user_register(request):
-    # if request.user.is_authenticated:
-    #     return redirect('ads_list')
+    if request.user.is_authenticated:
+        return redirect('user_profile')
 
     if request.method == 'POST':
         form = AccountCreationForm(request.POST)

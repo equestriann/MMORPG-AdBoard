@@ -149,3 +149,5 @@ MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+LOGIN_URL = "login_process"
