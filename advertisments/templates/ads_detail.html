@@ -8,7 +8,10 @@
             {{ ad.pub_date|date:'d M Y' }}
         </b>
         <br />
-        Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b> |
+        Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b>
+        {% if user.is_authenticated %}
+        {% if ad.author == request.user %}
+        |
         <a href="{% url 'ads_update' ad.id %}" style="color: #4682B4">
             Редактировать
         </a>
@@ -16,6 +19,8 @@
         <a href="{% url 'ads_delete' ad.id %}" style="color: #4682B4">
             Удалить
         </a>
+        {% endif %}
+        {% endif %}
         <br>
         <b>{{ replies_to_this_ad }}</b> откликов |
         <a href="{% url 'reply_create' ad.id %}" style="color: #4682B4">

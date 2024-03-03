@@ -37,12 +37,15 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{% url 'ads_search' %}">Поиск</a>
                                 </li>
+                                {% if request.user.is_authenticated  %}
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{% url 'ads_create' %}">Создать объявление</a>
                                 </li>
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'login_process' %}">Мой профиль</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="#!">Выйти</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'register_url' %}">Войти</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'logout_url' %}">Выйти</a></li>
+                                {% else %}
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'login_process' %}">Войти</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>

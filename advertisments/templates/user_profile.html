@@ -3,6 +3,12 @@
 {% block content %}
 <div class="container-fluid" id="centerLayer" xmlns="http://www.w3.org/1999/html">
     {% csrf_token %}
+    <p style="color:rgb(120, 120, 120)">
+        Мое пользовательское имя: <b style="color:rgb(80,80,80)">{{ request.user.username }}</b> |
+        <a href="{% url 'logout_url' %}" style="color: #4682B4">
+            <b>Выйти</b>
+        </a>
+    </p>
     <h6> Мои объявления: {{ ads.count }} </h6>
     {% for ad in ads %}
     <p style="color:rgb(120, 120, 120)">
@@ -14,7 +20,16 @@
     <hr>
     <h6> Мои отклики: {{ replies.count }} </h6>
     {% for reply in replies %}
-        <small style="color:rgb(120, 120, 120)">{{ reply.date_sent|date:'d M Y' }}</small>
+        <small style="color:rgb(120, 120, 120)">
+            {{ reply.date_sent|date:'d M Y' }} | К объявлению:
+            <a style="color:#4682B4" href="{% url 'ads_detail' reply.ad.id %}">
+                <b>{{ reply.ad.title }}</b>
+            </a>
+        </small>
+
+<!--        Объявление:-->
+<!--        <a style="color:#4682B4" href="{% url 'ads_detail' reply.ad.id %}"><b>{{ reply.ad.title }}</b></a>-->
+<!--&lt;!&ndash;        {{ reply.ad.title }}&ndash;&gt;-->
         <br>
         {{ reply.text|striptags|truncatechars:150 }}
     <br>

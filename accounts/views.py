@@ -6,6 +6,8 @@ from .forms import AccountCreationForm
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('user_profile')
 
     if request.method == "POST":
         username = request.POST["username"]
