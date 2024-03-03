@@ -74,4 +74,15 @@ def user_register(request):
 
 
 def user_logout(request):
-    pass
+    logout(request)
+    return redirect("logout_success")
+
+
+def logout_success(request):
+    context = {}
+
+    return render(
+        request,
+        template_name='logout_success.html',
+        context=context
+    )
