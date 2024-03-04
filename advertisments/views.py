@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.urls import reverse
 
@@ -121,13 +123,42 @@ class ReplyDetailView(LoginRequiredMixin, DetailView):
 
 
 # -----------------------------------
-class UserProfile(ListView):
-    template_name = "user_profile.html"
-    model = Ad
-    paginate_by = 3
+# class UserProfile(ListView):
+#     template_name = "user_profile.html"
+#     model = Ad
+#     paginate_by = 3
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['ads'] = Ad.objects.filter(author=self.request.user).all()
+#         context['replies'] = Reply.objects.filter(author=self.request.user).all()
+#         return context
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ads'] = Ad.objects.filter(author=self.request.user).all()
-        context['replies'] = Reply.objects.filter(author=self.request.user).all()
-        return context
+# class UserAds(ListView):
+#     template_name = 'user_profile.html'
+#     paginate_by = 3
+#     model = Ad
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['ads'] = Ad.objects.filter(author=self.request.user).all()
+#         # pprint(context)
+#         return context
+
+
+# class UserReplies(ListView):
+#     template_name = 'user_profile.html'
+#     paginate_by = 3
+#     model = Reply
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['replies'] = Reply.objects.filter(author=self.request.user).all()
+#         pprint(context)
+#         return context
+#
+#
+# class UserAdsReplies(ListView):
+#     template_name = 'user_profile.html'
+#     paginate_by = 3
+#     model = Reply

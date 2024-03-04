@@ -1,196 +1,196 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid" style="width:1200px;margin:0 auto;">
-    {% csrf_token %}
-    <p style="color:rgb(120, 120, 120)">
-        Мое пользовательское имя: <b style="color:rgb(80,80,80)">{{ request.user.username }}</b> |
-        <a href="{% url 'logout_url' %}" style="color: #4682B4">
-            <b>Выйти</b>
-        </a>
-    </p>
-    <h6> Мои объявления: {{ ads.count }} </h6>
-    {% for ad in page_obj %}
-    <p style="color:rgb(120, 120, 120)">
-        <a style="color:#4682B4" href="{% url 'ads_detail' ad.id %}"><b>{{ ad.title }}</b></a> | Категория: <b>{{ ad.category }}</b>
-        <br>
-        {{ ad.content|striptags|truncatechars:150 }}
-    </p>
-    {% endfor %}
+<!--<div class="container-fluid" style="width:1200px;margin:0 auto;">-->
+<!--    {% csrf_token %}-->
+<!--    <p style="color:rgb(120, 120, 120)">-->
+<!--        Мое пользовательское имя: <b style="color:rgb(80,80,80)">{{ request.user.username }}</b> |-->
+<!--        <a href="{% url 'logout_url' %}" style="color: #4682B4">-->
+<!--            <b>Выйти</b>-->
+<!--        </a>-->
+<!--    </p>-->
+<!--    <h6> Мои объявления: {{ ads.count }} </h6>-->
+<!--    {% for ad in ad_list %}-->
+<!--    <p style="color:rgb(120, 120, 120)">-->
+<!--        <a style="color:#4682B4" href="{% url 'ads_detail' ad.id %}"><b>{{ ad.title }}</b></a> | Категория: <b>{{ ad.category }}</b>-->
+<!--        <br>-->
+<!--        {{ ad.content|striptags|truncatechars:150 }}-->
+<!--    </p>-->
+<!--    {% endfor %}-->
 
-    {% if is_paginated %}
+<!--    {% if is_paginated %}-->
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                    Назад
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    Назад
-                </a>
-            </li>
-            {% endif %}
+<!--    <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination pagination-sm">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">-->
+<!--                    Назад-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" href="#">-->
+<!--                    Назад-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
 
-            {% if page_obj.paginator.num_pages <= 5 %}
+<!--            {% if page_obj.paginator.num_pages <= 5 %}-->
 
-            {% for page_num in page_obj.paginator.page_range %}
-            {% if page_num == page_obj.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_num }}">
-                    {{ page_num }}
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_num }}">
-                    {{ page_num }}
-                </a>
-            </li>
-            {% endif %}
-            {% endfor %}
+<!--            {% for page_num in page_obj.paginator.page_range %}-->
+<!--            {% if page_num == page_obj.number %}-->
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                <a class="page-link" href="?page={{ page_num }}">-->
+<!--                    {{ page_num }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_num }}">-->
+<!--                    {{ page_num }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
 
-            {% else %}
+<!--            {% else %}-->
 
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                    {{ page_obj.previous_page_number }}
-                </a>
-            </li>
-            {% endif %}
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">-->
+<!--                    {{ page_obj.previous_page_number }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
 
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_obj.number }}">
-                    {{ page_obj.number }}
-                </a>
-            </li>
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                <a class="page-link" href="?page={{ page_obj.number }}">-->
+<!--                    {{ page_obj.number }}-->
+<!--                </a>-->
+<!--            </li>-->
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                    {{ page_obj.next_page_number }}
-                </a>
-            </li>
-            {% endif %}
-            {% endif %}
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">-->
+<!--                    {{ page_obj.next_page_number }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            {% endif %}-->
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                    Вперед
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    Вперед
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    <hr>
-</div>
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">-->
+<!--                    Вперед-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" href="#">-->
+<!--                    Вперед-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--    <hr>-->
+<!--</div>-->
 
-{% endif %}
+<!--{% endif %}-->
 
-<div class="container-fluid" style="width:1200px;margin:0 auto;">
-    {% csrf_token %}
-    <h6> Мои отклики: {{ replies.count }} </h6>
-    {% for reply in replies %}
-        <small style="color:rgb(120, 120, 120)">
-            {{ reply.date_sent|date:'d M Y' }} | К объявлению:
-            <a style="color:#4682B4" href="{% url 'ads_detail' reply.ad.id %}">
-                <b>{{ reply.ad.title }}</b>
-            </a>
-        </small>
-        <br>
-        {{ reply.text|striptags|truncatechars:150 }}
-    <br>
+<!--<div class="container-fluid" style="width:1200px;margin:0 auto;">-->
+<!--    {% csrf_token %}-->
+<!--    <h6> Мои отклики: {{ replies.count }} </h6>-->
+<!--    {% for reply in replies %}-->
+<!--        <small style="color:rgb(120, 120, 120)">-->
+<!--            {{ reply.date_sent|date:'d M Y' }} | К объявлению:-->
+<!--            <a style="color:#4682B4" href="{% url 'ads_detail' reply.ad.id %}">-->
+<!--                <b>{{ reply.ad.title }}</b>-->
+<!--            </a>-->
+<!--        </small>-->
+<!--        <br>-->
+<!--        {{ reply.text|striptags|truncatechars:150 }}-->
+<!--    <br>-->
 
-    {% endfor %}
+<!--    {% endfor %}-->
 
-    {% if is_paginated %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                    Назад
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    Назад
-                </a>
-            </li>
-            {% endif %}
+<!--    {% if is_paginated %}-->
+<!--    <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination pagination-sm">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">-->
+<!--                    Назад-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" href="#">-->
+<!--                    Назад-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
 
-            {% if page_obj.paginator.num_pages <= 5 %}
+<!--            {% if page_obj.paginator.num_pages <= 5 %}-->
 
-            {% for page_num in page_obj.paginator.page_range %}
-            {% if page_num == page_obj.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_num }}">
-                    {{ page_num }}
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_num }}">
-                    {{ page_num }}
-                </a>
-            </li>
-            {% endif %}
-            {% endfor %}
+<!--            {% for page_num in page_obj.paginator.page_range %}-->
+<!--            {% if page_num == page_obj.number %}-->
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                <a class="page-link" href="?page={{ page_num }}">-->
+<!--                    {{ page_num }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_num }}">-->
+<!--                    {{ page_num }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
 
-            {% else %}
+<!--            {% else %}-->
 
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                    {{ page_obj.previous_page_number }}
-                </a>
-            </li>
-            {% endif %}
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">-->
+<!--                    {{ page_obj.previous_page_number }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
 
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_obj.number }}">
-                    {{ page_obj.number }}
-                </a>
-            </li>
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                <a class="page-link" href="?page={{ page_obj.number }}">-->
+<!--                    {{ page_obj.number }}-->
+<!--                </a>-->
+<!--            </li>-->
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                    {{ page_obj.next_page_number }}
-                </a>
-            </li>
-            {% endif %}
-            {% endif %}
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">-->
+<!--                    {{ page_obj.next_page_number }}-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--            {% endif %}-->
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                    Вперед
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    Вперед
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-</div>
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">-->
+<!--                    Вперед-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% else %}-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" href="#">-->
+<!--                    Вперед-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--    {% endif %}-->
+<!--</div>-->
 
 {% endblock content %}
