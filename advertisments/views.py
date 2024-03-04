@@ -87,7 +87,7 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ad'] = Ad.objects.get(pk=self.kwargs['pk'])
-        pprint(context)
+        # pprint(context)
         return context
 
     def form_valid(self, form):
@@ -110,7 +110,7 @@ class ReplyUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         pprint(context)
         context['ad'] = Reply.objects.get(pk=self.kwargs['pk']).ad
-        pprint(context)
+        # pprint(context)
         return context
 
     def get_success_url(self):
@@ -127,6 +127,7 @@ class ReplyDetailView(LoginRequiredMixin, DetailView):
         current_reply = Reply.objects.get(pk=self.kwargs['pk'])
         context['reply_date'] = current_reply.date_sent
         context['reply_text'] = current_reply.text
+        context['reply_author'] = current_reply.author
         is_accepted = current_reply.is_accepted
 
         if is_accepted is True:
@@ -153,6 +154,8 @@ class UserProfile(ListView):
         context = super().get_context_data(**kwargs)
         context['ads'] = Ad.objects.filter(author=self.request.user).all()
         context['replies'] = Reply.objects.filter(author=self.request.user).all()
+        context['replies_to_self_ads'] = Reply.objects.filter(ad__author=self.request.user).all()
+
         return context
 
 # class UserAds(ListView):
