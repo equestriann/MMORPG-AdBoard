@@ -79,7 +79,7 @@ class AdsDeleteView(LoginRequiredMixin, DeleteView):
 
 # -----------------------------------
 
-class ReplyCreateView(LoginRequiredMixin, CreateView):
+class ReplyCreateView(LoginRequiredMixin, CreateView, UpdateView):
     model = Reply
     form_class = ReplyCreateForm
     template_name = 'reply_create.html'
@@ -87,16 +87,9 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         reply = form.save(commit=False)
-        ad = Ad.objects.get(pk=self.kwargs['pk'])
-        reply.ad = ad
         form.instance.author = self.request.user
         reply.save()
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ad_title'] = Ad.objects.get(pk=self.kwargs['pk']).title
-        return context
 
     def get_success_url(self):
         return reverse('reply_detail', kwargs={'pk': self.object.pk})
@@ -122,17 +115,23 @@ class ReplyDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
+class ReplyDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'reply_delete.html'
+    success_url = '/'
+    queryset = Reply.objects.all()
+
+
 # -----------------------------------
-# class UserProfile(ListView):
-#     template_name = "user_profile.html"
-#     model = Ad
-#     paginate_by = 3
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['ads'] = Ad.objects.filter(author=self.request.user).all()
-#         context['replies'] = Reply.objects.filter(author=self.request.user).all()
-#         return context
+class UserProfile(ListView):
+    template_name = "user_profile.html"
+    model = Ad
+    paginate_by = 3
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ads'] = Ad.objects.filter(author=self.request.user).all()
+        context['replies'] = Reply.objects.filter(author=self.request.user).all()
+        return context
 
 # class UserAds(ListView):
 #     template_name = 'user_profile.html'
