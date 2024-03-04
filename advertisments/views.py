@@ -7,6 +7,8 @@ from .filters import AdsFilter
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.core.paginator import Paginator
+
 
 class AdsListView(ListView):
     model = Ad
@@ -122,6 +124,7 @@ class ReplyDetailView(LoginRequiredMixin, DetailView):
 class UserProfile(ListView):
     template_name = "user_profile.html"
     model = Ad
+    paginate_by = 3
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
