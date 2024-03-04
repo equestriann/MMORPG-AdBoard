@@ -108,17 +108,23 @@
             <a style="color:#4682B4" href="{% url 'ads_detail' reply.ad.id %}">
                 <b>{{ reply.ad.title }}</b>
             </a>
+            |
+            <a style="color:#4682B4" href="{% url 'reply_update' reply.id %}">
+                Редактировать
+            </a>
+            |
+            <a style="color:#4682B4" href="{% url 'reply_delete' reply.id %}">
+                Удалить
+            </a>
+            |
+            <a style="color:#4682B4" href="{% url 'reply_detail' reply.id %}">
+                Детали
+            </a>
         </small>
         <br>
         {{ reply.text|striptags|truncatechars:150 }}
         <br>
-        <a style="color:#4682B4" href="{% url 'reply_create' reply.id %}">
-            Редактировать
-        </a>
-        |
-        <a style="color:#4682B4" href="{% url 'reply_delete' reply.id %}">
-            Удалить
-        </a>
+
     <br>
 
     {% endfor %}

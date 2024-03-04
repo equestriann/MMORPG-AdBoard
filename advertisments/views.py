@@ -79,17 +79,39 @@ class AdsDeleteView(LoginRequiredMixin, DeleteView):
 
 # -----------------------------------
 
-class ReplyCreateView(LoginRequiredMixin, CreateView, UpdateView):
+class ReplyCreateView(LoginRequiredMixin, CreateView):
     model = Reply
     form_class = ReplyCreateForm
     template_name = 'reply_create.html'
-    context_object_name = 'reply'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ad'] = Ad.objects.get(pk=self.kwargs['pk'])
+        pprint(context)
+        return context
 
     def form_valid(self, form):
         reply = form.save(commit=False)
         form.instance.author = self.request.user
+        reply.ad = Ad.objects.get(pk=self.kwargs['pk'])
         reply.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('reply_detail', kwargs={'pk': self.object.pk})
+
+
+class ReplyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Reply
+    form_class = ReplyCreateForm
+    template_name = 'reply_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pprint(context)
+        context['ad'] = Reply.objects.get(pk=self.kwargs['pk']).ad
+        pprint(context)
+        return context
 
     def get_success_url(self):
         return reverse('reply_detail', kwargs={'pk': self.object.pk})
