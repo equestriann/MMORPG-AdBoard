@@ -4,6 +4,8 @@
 <div class="container-fluid" style="width:1200px;margin:0 auto;">
     {% csrf_token %}
 
+    <br />
+
     <p>
         Мое пользовательское имя: {{ request.user.username }} |
         <a href="{% url 'logout_url' %}">
@@ -98,6 +100,8 @@
     <p>Здесь будут отклики к Вашим объявлениям</p>
 
     {% endif %}
+
+    <br />
 
 </div>
 {% endblock content %}
