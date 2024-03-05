@@ -3,6 +3,8 @@ from pprint import pprint
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.urls import reverse
 
+from django.shortcuts import redirect
+
 from .models import Ad, Reply
 from .forms import AdsCreateForm, ReplyCreateForm
 from .filters import AdsFilter
@@ -10,6 +12,8 @@ from .filters import AdsFilter
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core.paginator import Paginator
+
+from django.contrib import messages
 
 
 class AdsListView(ListView):
@@ -73,7 +77,7 @@ class AdsUpdateView(LoginRequiredMixin, UpdateView):
 
 class AdsDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'ads_delete.html'
-    success_url = '/'
+    success_url = '/my_profile'
     queryset = Ad.objects.all()
 
 
@@ -128,38 +132,51 @@ class ReplyDetailView(LoginRequiredMixin, DetailView):
         context['reply_date'] = current_reply.date_sent
         context['reply_text'] = current_reply.text
         context['reply_author'] = current_reply.author
-        is_accepted = current_reply.is_accepted
+        context['reply_id'] = current_reply.id
+        context['is_accepted'] = current_reply.is_accepted
 
-        if is_accepted is True:
-            context['is_accepted'] = 'Отклик принят'
-        else:
-            context['is_accepted'] = 'В ожидании'
-
+        # pprint(context)
         return context
 
 
 class ReplyDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'reply_delete.html'
-    success_url = '/'
+    success_url = '/my_profile'
     queryset = Reply.objects.all()
+
+
+def reply_accept(request, pk):
+    reply = Reply.objects.get(pk=pk)
+
+    if not reply.is_accepted:
+        reply.accept()
+    else:
+        reply.reject()
+
+    # pprint(current_ad.id)
+    rredirect = request.META.get("HTTP_REFERER")
+    pprint(rredirect)
+    return redirect(request.META.get("HTTP_REFERER"), pk)
 
 
 # -----------------------------------
 class UserProfile(ListView):
-    template_name = "user_profile.html"
+    template_name = "profile.html"
     model = Ad
     paginate_by = 3
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ads'] = Ad.objects.filter(author=self.request.user).all()
+        context['ads'] = Ad.objects.filter(author=self.request.user)
         context['replies'] = Reply.objects.filter(author=self.request.user).all()
         context['replies_to_self_ads'] = Reply.objects.filter(ad__author=self.request.user).all()
+
+        pprint(context)
 
         return context
 
 # class UserAds(ListView):
-#     template_name = 'user_profile.html'
+#     template_name = 'profile.html'
 #     paginate_by = 3
 #     model = Ad
 #
@@ -171,7 +188,7 @@ class UserProfile(ListView):
 
 
 # class UserReplies(ListView):
-#     template_name = 'user_profile.html'
+#     template_name = 'profile.html'
 #     paginate_by = 3
 #     model = Reply
 #
@@ -183,6 +200,6 @@ class UserProfile(ListView):
 #
 #
 # class UserAdsReplies(ListView):
-#     template_name = 'user_profile.html'
+#     template_name = 'profile.html'
 #     paginate_by = 3
 #     model = Reply

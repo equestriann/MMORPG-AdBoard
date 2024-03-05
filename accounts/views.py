@@ -41,7 +41,7 @@ def login_success(request):
     return render(
         request,
         context=context,
-        template_name="user_profile.html"
+        template_name="profile.html"
     )
 
 

@@ -10865,3 +10865,8 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: -15rem;
   }
 }
+
+.scroll {
+  height: 10%; /* Высота блока */
+  overflow-y: scroll; /* Включаем вертикальную прокрутку */
+}

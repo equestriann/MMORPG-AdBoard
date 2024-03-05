@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>/reply/update', ReplyUpdateView.as_view(), name='reply_update'),
     path('<int:pk>/reply/detail', ReplyDetailView.as_view(), name='reply_detail'),
     path('<int:pk>/reply/delete', ReplyDeleteView.as_view(), name='reply_delete'),
+    path('<int:pk>/reply/accept', reply_accept, name='reply_accept'),
     path('my_profile/', UserProfile.as_view(), name='user_profile'),
     # path('myprofile', UserAds.as_view(), name='user_profile'),
     # path('my_profile', UserReplies.as_view(), name='user_profile'),

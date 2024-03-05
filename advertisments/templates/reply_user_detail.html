@@ -7,8 +7,16 @@
         <b>
             {{ reply_date|date:'d M Y' }} | {{ reply_author }}
             <br />
-            Статус рассмотрения: {{ is_accepted }}
+            Статус рассмотрения:
+            {% if is_accepted %}
+                <strong style="color: #008000">Принят</strong>
+            {% else %}
+                <strong style="color: #B22222">В ожидании</strong>
+            {% endif %}
         </b>
+        <a href="{% url 'reply_accept' reply.id %}" style="color: #4682B4">
+            Принять отклик
+        </a>
         <br />
     </p>
     <p>
