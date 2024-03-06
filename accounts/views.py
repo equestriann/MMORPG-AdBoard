@@ -33,18 +33,6 @@ def user_login(request):
     )
 
 
-def login_success(request):
-    context = {
-        # "text": "Login success"
-    }
-
-    return render(
-        request,
-        context=context,
-        template_name="profile.html"
-    )
-
-
 def user_register(request):
     if request.user.is_authenticated:
         return redirect('user_profile')
@@ -55,6 +43,17 @@ def user_register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Аккаунт зарегистрирован')
+            user = authenticate(
+                request,
+                username=request.POST['username'],
+                password=request.POST['password1']
+            )
+
+            if user is not None:
+                login(request, user)
+                return redirect('user_profile')
+            else:
+                messages.info(request, 'Login error')
 
             return redirect('ads_list')
 
