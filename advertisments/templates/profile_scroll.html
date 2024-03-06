@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+<div class="container-fluid" style="width:1200px;margin:0 auto">
+    <br />
+
+    <p>
+        Мое пользовательское имя: {{ request.user.username }} |
+        <a href="{% url 'logout_url' %}">
+            <b>Выйти</b>
+        </a>
+    </p>
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto">
+    <h5 align="center">
+        Мои объявления
+        <br/>
+        <small>Всего: {{ ads.count }}</small>
+    </h5>
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto;max-height:170px;overflow:auto">
+    {% if ads %}
+
+        {% for ad in ads %}
+        <p>
+            <small style="color:rgb(120, 120, 120)">
+                <b>{{ ad.title }}</b> от {{ ad.pub_date|date:'d.m.y' }} |
+                <a href="{% url 'ads_detail' ad.id %}">Просмотреть</a>
+            </small>
+            <br />
+            {{ ad.content|striptags|truncatechars:150 }}
+        </p>
+        {% endfor %}
+
+    {% else %}
+    <p>Здесь будут Ваши объявления</p>
+
+    {% endif %}
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto">
+    <br />
+    <h5 align="center">
+        Мои отлики
+        <br />
+        <small>Всего: {{ replies.count }}</small>
+    </h5>
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto;max-height:170px;overflow:auto">
+    {% if replies %}
+
+        {% for reply in replies %}
+        <p>
+            <small style="color:rgb(120, 120, 120)">
+                {{ reply.date_sent|date:'d.m.y' }} к "{{ reply.ad.title }}"
+
+                {% if reply.is_accepted %}
+                    <strong style="color: #008000">принят</strong> |
+                {% else %}
+                    <strong style="color: #B22222">в ожидании</strong> |
+                {% endif %}
+
+                <a href="{% url 'reply_detail' reply.id %}">Просмотреть</a>
+            </small>
+            <br />
+            {{ reply.text|striptags|truncatechars:125 }}
+        </p>
+        {% endfor %}
+
+    {% else %}
+    <p>Здесь будут Ваши отклики</p>
+
+    {% endif %}
+
+    <br />
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto">
+    <br />
+    <h5 align="center">
+        Отклики к моим объявлениям
+        <br />
+        <small>Всего: {{ replies_to_self_ads.count }}</small>
+    </h5>
+</div>
+<div class="container-fluid" style="width:1200px;margin:0 auto;max-height:170px;overflow:auto">
+    {% if replies_to_self_ads %}
+
+        {% for reply in replies_to_self_ads %}
+        <p>
+            <small style="color:rgb(120, 120, 120)">
+                {{ reply.date_sent|date:'d.m.y' }} от {{ reply.author }}
+
+                {% if reply.is_accepted %}
+                    <strong style="color: #008000">принят</strong> |
+                {% else %}
+                    <strong style="color: #B22222">в ожидании</strong> |
+                {% endif %}
+
+                <a href="{% url 'reply_detail' reply.id %}">Просмотреть</a>
+            </small>
+            <br />
+            {{ reply.text|striptags|truncatechars:125 }}
+        </p>
+        {% endfor %}
+
+    {% else %}
+    <p>Здесь будут отклики к Вашим объявлениям</p>
+
+    {% endif %}
+
+    <br />
+</div>
+{% endblock content %}

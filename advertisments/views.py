@@ -147,9 +147,8 @@ def reply_accept(request, pk):
 
 # -----------------------------------
 class UserProfile(ListView):
-    template_name = "profile.html"
+    template_name = "profile_scroll.html"
     model = Ad
-    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
