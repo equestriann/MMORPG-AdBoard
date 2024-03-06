@@ -124,19 +124,8 @@ class ReplyUpdateView(LoginRequiredMixin, UpdateView):
 class ReplyDetailView(LoginRequiredMixin, DetailView):
     model = Reply
     context_object_name = 'reply'
-    template_name = 'reply_user_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        current_reply = Reply.objects.get(pk=self.kwargs['pk'])
-        context['reply_date'] = current_reply.date_sent
-        context['reply_text'] = current_reply.text
-        context['reply_author'] = current_reply.author
-        context['reply_id'] = current_reply.id
-        context['is_accepted'] = current_reply.is_accepted
-
-        # pprint(context)
-        return context
+    template_name = 'reply_detail.html'
+    login_url = 'login'
 
 
 class ReplyDeleteView(LoginRequiredMixin, DeleteView):
@@ -153,10 +142,7 @@ def reply_accept(request, pk):
     else:
         reply.reject()
 
-    # pprint(current_ad.id)
-    rredirect = request.META.get("HTTP_REFERER")
-    pprint(rredirect)
-    return redirect(request.META.get("HTTP_REFERER"), pk)
+    return redirect(request.META.get('HTTP_REFERER'), pk)
 
 
 # -----------------------------------
@@ -174,32 +160,3 @@ class UserProfile(ListView):
         pprint(context)
 
         return context
-
-# class UserAds(ListView):
-#     template_name = 'profile.html'
-#     paginate_by = 3
-#     model = Ad
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['ads'] = Ad.objects.filter(author=self.request.user).all()
-#         # pprint(context)
-#         return context
-
-
-# class UserReplies(ListView):
-#     template_name = 'profile.html'
-#     paginate_by = 3
-#     model = Reply
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['replies'] = Reply.objects.filter(author=self.request.user).all()
-#         pprint(context)
-#         return context
-#
-#
-# class UserAdsReplies(ListView):
-#     template_name = 'profile.html'
-#     paginate_by = 3
-#     model = Reply

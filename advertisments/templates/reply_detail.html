@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" id="centerLayer">
+
+    <br />
+
+    <h4 align="center">Отлик к объявлению "{{ reply.ad.title }}"</h4>
+
+    {% if reply.author == request.user %}
+    <p style="color:rgb(120, 120, 120)">
+        Дата создания: {{ reply.date_sent|date:'d.m.y' }} <br />
+        Статус:
+        {% if reply.is_accepted %}
+            <strong style="color: #008000">Принят</strong>
+        {% else %}
+            <strong style="color: #B22222">В ожидании</strong>
+        {% endif %}
+    </p>
+    <p>
+        {{ reply.text }} <br />
+    </p>
+    <a href="{% url 'reply_update' reply.id %}" class="btn btn-outline-dark btn-sm">Редактировать</a>
+    <a href="{% url 'reply_delete' reply.id %}" class="btn btn-outline-danger btn-sm">Удалить</a> <br />
+
+    {% elif reply.ad.author == request.user %}
+    <p style="color:rgb(120, 120, 120)">
+        Дата создания: {{ reply.date_sent|date:'d.m.y' }} <br />
+        Автор: {{ reply.author }} <br />
+        Статус:
+        {% if reply.is_accepted %}
+            <strong style="color: #008000">Принят</strong>
+        {% else %}
+            <strong style="color: #B22222">В ожидании</strong>
+        {% endif %}
+    </p>
+    <p>
+        {{ reply.text }}
+    </p>
+        {% if reply.is_accepted %}
+            <a href="{% url 'reply_accept' reply.id %}" class="btn btn-outline-danger btn-sm">Отклонить</a>
+        {% else %}
+            <a href="{% url 'reply_accept' reply.id %}" class="btn btn-outline-success btn-sm">Принять</a>
+        {% endif %}
+
+    {% endif %}
+
+    <br />
+
+</div>
+
+{% endblock content %}
