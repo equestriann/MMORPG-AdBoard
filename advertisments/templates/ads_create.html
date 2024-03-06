@@ -2,24 +2,31 @@
 
 {% block content %}
 <form action="" method="POST">
-    <div class="container-fluid" xmlns="http://www.w3.org/1999/html" id="centerLayer">
-        <h2 class="mt-4" align="center">Новое объявление</h2>
+    <div class="container-fluid" id="centerLayer">
             {% csrf_token %}
+
+            <br />
+
+            <h4 align="center">Новое объявление</h4>
+
+            <br />
+
                 <p>
                     <label>Категория:</label>
                     {{ form.category }}
                     <label>Заголовок:</label>
                     {{ form.title }}
-<!--                    <label >Автор:</label>-->
-<!--                    {{ form.author }}-->
+
                 </p>
                 <p>
                     {{ form.media }}
                     {{ form.content }}
                 </p>
-            <input type="submit" value="Опубликовать" style="color: #4682B4; border: #4682B4"/>
-            <br><br>
-            <a href="{% url 'ads_list' %}" style="color: #4682B4">
+            <input type="submit" value="Опубликовать" class="btn btn-outline-success">
+            <br />
+            <br />
+            <br />
+            <a href="{% url 'ads_list' %}">
                 <b>Назад на главную</b>
             </a>
     </div>
