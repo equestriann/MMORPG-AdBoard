@@ -76,7 +76,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect("logout_success")
+    return redirect('ads_list')
 
 
 def logout_success(request):

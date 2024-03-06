@@ -2,39 +2,43 @@
 
 {% block content %}
 
-<div class="container-fluid" id="centerLayer">
-<!--    <br>-->
-<!--<h3 align="center">-->
-<!--    Вход-->
-<!--</h3>-->
 
-<br>
-<h5>
-    {% for message in messages %}
-    {{ message }}
-    {% endfor %}
-</h5>
-<br>
+
+    <br />
+    <br />
 
 <form method="POST" action="">
+    <div class="container-fluid" id="centerLayer">
     {% csrf_token %}
+    Авторизируйтесь, чтобы иметь доступ к личному кабинету, созданию объявлений многому другому :)
     <div class="form-group">
-        Имя пользователя
+        <br />
+        <small>Имя пользователя</small>
         <input type="text" name="username" class="form-control">
         <br>
     </div>
     <div class="form-group">
-        Пароль
+        <small>Пароль</small>
         <input type="password" name="password" class="form-control">
         <br>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <input type="submit" class="btn btn-success" value="Войти"/>
-</form>
-<br>
-<br>
 
-<a style="color:#4682B4" href="{% url 'register_url' %}">
+<br>
+<br>
+У Вас еще нет аккаунта?
+<br />
+<br />
+<a href="{% url 'register_url' %}" class="btn btn-dark">
     <b>Зарегистрироваться</b>
 </a>
 </div>
+</form>
 {% endblock content %}

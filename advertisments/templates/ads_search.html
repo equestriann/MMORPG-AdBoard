@@ -5,21 +5,31 @@
 {% block content %}
 <div class="container-fluid" id="centerLayer">
     <br />
-    <form method="GET">
+    <form method="get">
+        <table>
+            <tr>
+                <td>Категория:</td>
+                <td>{{ filter.form.category }}</td>
+            <tr>
+                <td>Заголовок:</td>
+                <td>{{ filter.form.title }}</td>
+            </tr>
+            <tr>
+                <td>Автор:</td>
+                <td>{{ filter.form.author }}</td>
+            </tr>
+            <tr>
+                <td>Период:</td>
+                <td>{{ filter.form.pub_date }}</td>
+            </tr>
+        </table>
+        <br/>
         <p>
-            Категория: {{ filter.form.category }} |
-            Заголовок: {{ filter.form.title }} |
-            Автор: {{ filter.form.author }}
-        </p>
-        <p>
-            Период: {{ filter.form.pub_date }}
-        </p>
-        <p>
-            <input type="submit" value="Найти" style="color: #4682B4; border: #4682B4">
+            <input type="submit" value="Найти по фильтрам" class="btn btn-outline-dark btn-sm">
         </p>
         <hr>
     </form>
-    {% if ads %}
+    {% if filter.qs %}
         {% for ad in filter.qs %}
             <p style="color:rgb(120, 120, 120)">
                 Автор: <b>{{ ad.author }}</b> | Категория: <b>{{ ad.category }}</b>
@@ -32,7 +42,7 @@
             <hr>
         {% endfor %}
     {% else %}
-        <h3>К сожалению, объявлений, подходящих по данным параметрам нет.</h3>
+        <h6>К сожалению, объявлений, подходящих по данным параметрам нет.</h6>
     {% endif %}
 </div>
 {% endblock content %}

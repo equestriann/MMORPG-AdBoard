@@ -41,8 +41,6 @@ class AdsCreateForm(forms.ModelForm):
                   'content']
 
 
-# TODO: убрать поле author, когда будет реализована регистрация и авторизация
-
 class ReplyCreateForm(forms.ModelForm):
     text = TextField()
 
