@@ -3,6 +3,10 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 
 from .forms import AccountCreationForm
+from .tasks import send_activation_code
+from .models import User, Code
+
+import pprint
 
 
 def user_login(request):
@@ -41,21 +45,25 @@ def user_register(request):
         form = AccountCreationForm(request.POST)
 
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Аккаунт зарегистрирован')
-            user = authenticate(
-                request,
-                username=request.POST['username'],
-                password=request.POST['password1']
-            )
+            user = form.save(commit=False)
+            username = user.username
+            user_email = user.email
 
-            if user is not None:
-                login(request, user)
-                return redirect('user_profile')
+            if not User.objects.filter(email=user_email).exists():
+                user.is_active = False
+                user.save()
+                send_activation_code.delay(user.id)
+                messages.info(request, message='Код подтверждения отправлен на Вашу почту')
+
+                return redirect(to='account_activation')
+
             else:
-                messages.info(request, 'Login error')
+                existing_user = User.objects.get(email=user_email)
 
-            return redirect('ads_list')
+                if existing_user.username != username and existing_user.is_active:
+                    messages.info(request, message='Аккаунт с данной элетронной почтой уже существует!')
+                    context = {'reg_form': form}
+                    return render(request, 'register.html', context)
 
         else:
             messages.error(request, message=form.errors)
@@ -64,9 +72,7 @@ def user_register(request):
     else:
         form = AccountCreationForm()
 
-    context = {
-        'reg_form': form,
-    }
+    context = {'reg_form': form}
     return render(
         request,
         'register.html',
@@ -74,16 +80,25 @@ def user_register(request):
     )
 
 
-def user_logout(request):
-    logout(request)
-    return redirect('ads_list')
+def activate_account(request):
+    if request.method == "POST":
+        cur_code = request.POST.get('code')
 
-
-def logout_success(request):
-    context = {}
+        if Code.objects.filter(code=cur_code):
+            user = Code.objects.get(code=cur_code).user
+            user.is_active = True
+            user.save()
+            Code.objects.get(code=cur_code).delete()
+            return redirect('login')
+        else:
+            messages.info(request, 'Некорректный код')
 
     return render(
         request,
-        template_name='logout_success.html',
-        context=context
+        'account_activation.html'
     )
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('ads_list')

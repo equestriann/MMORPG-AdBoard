@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h6>Введите код из письма</h6>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="password" class="form-control" name="code">
+        <br>
+    </div>
+    <input type="submit" class="btn btn-outline-success btn-sm" value="Активировать">
+    <br>
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</form>
+{% endblock content %}

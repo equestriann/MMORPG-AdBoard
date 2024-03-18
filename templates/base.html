@@ -49,10 +49,10 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{% url 'ads_create' %}">Создать объявление</a>
                                 </li>
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'login_process' %}">Мой профиль</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'logout_url' %}">Выйти</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Мой профиль</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Выйти</a></li>
                                 {% else %}
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'login_process' %}">Войти</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
                                 {% endif %}
                             </ul>
                         </div>

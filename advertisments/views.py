@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 
 from django.contrib import messages
 
+from .tasks import send_test_email
+
 
 class AdsListView(ListView):
     model = Ad
@@ -156,6 +158,10 @@ class UserProfile(ListView):
         context['replies'] = Reply.objects.filter(author=self.request.user).all()
         context['replies_to_self_ads'] = Reply.objects.filter(ad__author=self.request.user).all()
 
-        pprint(context)
-
         return context
+
+
+def send_mail_test(request):
+    send_test_email.delay(request.user.id)
+
+    return redirect('user_profile')

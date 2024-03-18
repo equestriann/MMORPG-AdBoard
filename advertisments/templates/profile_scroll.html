@@ -7,8 +7,13 @@
 
     <p>
         Мое пользовательское имя: {{ request.user.username }} |
-        <a href="{% url 'logout_url' %}">
+        <a href="{% url 'logout' %}">
             <b>Выйти</b>
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'test' %}" class="btn btn-dark btn-sm">
+            Отправить письмо
         </a>
     </p>
 </div>
