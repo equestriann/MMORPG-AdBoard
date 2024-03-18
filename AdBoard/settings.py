@@ -64,6 +64,8 @@ MIDDLEWARE = [
 
 SITE_ID = 1
 
+SITE_URL = 'http://127.0.0.1:8000'
+
 ROOT_URLCONF = 'AdBoard.urls'
 
 TEMPLATES = [
