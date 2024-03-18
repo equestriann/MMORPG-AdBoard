@@ -8,14 +8,13 @@ from django.shortcuts import redirect
 from .models import Ad, Reply
 from .forms import AdsCreateForm, ReplyCreateForm
 from .filters import AdsFilter
+from .tasks import weekly_mailing_task
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core.paginator import Paginator
 
 from django.contrib import messages
-
-from .tasks import send_test_email
 
 
 class AdsListView(ListView):
@@ -159,9 +158,3 @@ class UserProfile(ListView):
         context['replies_to_self_ads'] = Reply.objects.filter(ad__author=self.request.user).all()
 
         return context
-
-
-def send_mail_test(request):
-    send_test_email.delay(request.user.id)
-
-    return redirect('user_profile')

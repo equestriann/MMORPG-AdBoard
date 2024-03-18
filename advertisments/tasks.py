@@ -2,12 +2,15 @@ from celery import shared_task
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from .models import User, Reply
+from .models import User, Reply, Ad
 from AdBoard.settings import SITE_URL
+
+import time
+import datetime
 
 
 @shared_task
-def new_reply_email(reply_id):
+def new_reply_email_task(reply_id):
     reply = Reply.objects.get(id=reply_id)
     ad = reply.ad
 
@@ -30,7 +33,7 @@ def new_reply_email(reply_id):
 
 
 @shared_task
-def status_upd_email(reply_id):
+def status_upd_email_task(reply_id):
     reply = Reply.objects.get(id=reply_id)
     ad = reply.ad
 
@@ -46,4 +49,27 @@ def status_upd_email(reply_id):
         body=message,
         to=[reply.author.email]
     )
+    email.send()
+
+
+@shared_task
+def weekly_mailing_task():
+    today = datetime.datetime.now()
+    week_ago = today - datetime.timedelta(days=7)
+    ads = Ad.objects.filter(pub_date__gte=week_ago)
+    recipients = User.objects.values_list('email', flat=True)
+
+    message = render_to_string(
+        'weekly_mailing.html',
+        {
+            'link': SITE_URL,
+            'ads': ads,
+        }
+    )
+    email = EmailMultiAlternatives(
+        subject='Новые объявления',
+        body='',
+        to=recipients
+    )
+    email.attach_alternative(message, 'text/html')
     email.send()
